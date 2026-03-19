@@ -54,6 +54,14 @@ prismjs:
   preprocess: true
   line_number: true
   tab_replace: ''
+math:
+  engine: 'mathjax'   # 或 'katex'
+  mathjax:
+    enable: true
+    tags: 'ams'       # 可选：ams / none
+    single_dollars: true   # 开启 $$   ...   $$ 行内公式（默认 false 避免冲突）
+    cjk_width: 0.9
+    normal_width: 0.6
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -102,3 +110,4 @@ theme: landscape
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
+
