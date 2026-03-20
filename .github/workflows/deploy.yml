@@ -2,8 +2,8 @@ name: Deploy Hexo site to GitHub Pages
 
 on:
   push:
-    branches: [ main ]          # 如果你是 master 分支，改成 master
-  workflow_dispatch:            # 允许手动触发
+    branches: [ main ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,31 +15,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 仓库
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4   # 升级到 v4，避免 Node 警告
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'      # Hexo 官方推荐 18+，20 最稳
+          node-version: '20'
           cache: 'npm'
 
       - name: 安装依赖
         run: npm ci
 
       - name: 生成静态文件
-        run: npx hexo clean && npx hexo generate   # 清理 + 生成
+        run: npx hexo clean && npx hexo generate
 
       - name: 上传构建产物
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v3   # v3 稳，v4 也可试
         with:
           path: ./public
 
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: 部署到 GitHub Pages
         id: deployment
